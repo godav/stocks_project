@@ -69,15 +69,15 @@ export class UserTradeComponent implements OnInit {
           } else { // check if sell operation
             this.stockSrv.getStockFromProtfolio(currentStock[0].symbol).subscribe(userStock => {
               // if (userStock) {
-                this.stock = {
-                  symbol: currentStock[0].symbol,
-                  name: currentStock[0].name,
-                  price: currentStock[0].price,
-                  operation: 2,
-                  amount: parseInt(userStock[0].amount)
-                }
+              this.stock = {
+                symbol: currentStock[0].symbol,
+                name: currentStock[0].name,
+                price: currentStock[0].price,
+                operation: 2,
+                amount: parseInt(userStock[0].amount)
+              }
 
-                this.setForm();
+              this.setForm();
               // }
               // else {
               //   console.log('user dont poses this stock')
@@ -99,6 +99,10 @@ export class UserTradeComponent implements OnInit {
     });
   }
 
+  cancel() {
+    this.router.navigate(['/', 'user-protfolio']);
+  }
+
   save() {
     if (this.form.valid) {
       this.stock.amount = parseInt(this.form.get('amount').value);
@@ -112,13 +116,13 @@ export class UserTradeComponent implements OnInit {
 
       if (this.stock.operation === 1) { // if buy operation
         this.stockSrv.buyStocks(this.stock).subscribe(x => {
-          this.dialog.open(SuccessDialogComponent, {data}).afterClosed().subscribe(() => {
+          this.dialog.open(SuccessDialogComponent, { data }).afterClosed().subscribe(() => {
             this.router.navigate(['/', 'user-protfolio']);
           });
         });
       } else { // if sell operation
         this.stockSrv.sellStocks(this.stock).subscribe(x => {
-          this.dialog.open(SuccessDialogComponent, {data}).afterClosed().subscribe(() => {
+          this.dialog.open(SuccessDialogComponent, { data }).afterClosed().subscribe(() => {
             this.router.navigate(['/', 'user-protfolio']);
           });;
 
