@@ -1,0 +1,16 @@
+/* You can add global styles to this file, and also import other style files */
+/* @import "@angular/material/prebuilt-themes/purple-green.css";  */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+.center{
+    text-align: center !important;
+}
+
+table th,td {
+    font-size: 1em !important;
+}
+
+.mat-header-cell{
+    background-color: navajowhite !important;
+    color: black !important;
+}

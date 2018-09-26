@@ -1,0 +1,112 @@
+<mat-tab-group>
+  <mat-tab label="Protfolio">
+
+    <div class="spinner-container" *ngIf="dataSource.loading$ | async">
+      <mat-progress-spinner></mat-progress-spinner>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="symbol">
+        <th color="primary" class="center" mat-header-cell *matHeaderCellDef mat-sort-header> Symbol </th>
+        <td class="center" mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+        <td class="center" mat-footer-cell *matFooterCellDef> Total </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th color="primary" class="center" mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <td class="center" mat-cell *matCellDef="let element"> {{element.name}} </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="amount">
+        <th color="primary" class="right" mat-header-cell *matHeaderCellDef mat-sort-header> Amount </th>
+        <td class="right" mat-cell *matCellDef="let element"> {{element.amount | number:'1.0-0'}} </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <!-- price Column -->
+      <ng-container matColumnDef="price">
+        <th color="primary" class="right" mat-header-cell *matHeaderCellDef mat-sort-header> Buy Price </th>
+        <td class="right" mat-cell *matCellDef="let element"> {{element.price | currency}} </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <!-- priceChangeInDot Column -->
+      <ng-container matColumnDef="priceChangeDots">
+        <th color="primary" class="right" mat-header-cell *matHeaderCellDef mat-sort-header> Change $</th>
+        <td class="right" mat-cell *matCellDef="let element" [ngClass]="checkChangeRaised(element.priceChangeDots)?'up':'down'">
+          {{element.priceChangeDots | currency}}
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <!-- priceChangeInPercent Column -->
+      <ng-container matColumnDef="priceChangePercent">
+        <th color="primary" class="right" mat-header-cell *matHeaderCellDef mat-sort-header> Change % </th>
+        <td class="right" mat-cell *matCellDef="let element" [ngClass]="checkChangeRaised(element.priceChangeDots)?'up':'down'">{{element.priceChangePercent
+          | percent:'1.2-2'}}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <!-- stock value Column -->
+      <ng-container matColumnDef="total">
+          <th color="primary" class="right" mat-header-cell *matHeaderCellDef mat-sort-header> Gain / Lose </th>
+          <td class="right" mat-cell *matCellDef="let element" [ngClass]="checkChangeRaised(element.priceChangeDots)?'up':'down'">{{element.total
+            | currency}}</td>
+          <td class="right" mat-footer-cell *matFooterCellDef [ngClass]="checkChangeRaised(getTotalCost())?'up':'down'"> {{getTotalCost()
+            | currency}} </td>
+        </ng-container>
+
+      <!-- stock gain/lose Column -->
+      <ng-container matColumnDef="value">
+        <th color="primary" class="right" mat-header-cell *matHeaderCellDef mat-sort-header> value </th>
+        <td class="right" mat-cell *matCellDef="let element">{{element.value
+          | currency}}</td>
+        <td class="right" mat-footer-cell *matFooterCellDef > {{getTotalValue()
+          | currency}} </td>
+      </ng-container>
+
+      <!-- Buy operation Column -->
+      <ng-container matColumnDef="buyOperation">
+        <th color="primary" class="center" mat-header-cell *matHeaderCellDef> Buy </th>
+        <td class="center" mat-cell *matCellDef="let element">
+          <button mat-stroked-button color="primary" (click)=goToBuyStocks(element)>Buy</button>
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <!-- sell Column -->
+      <ng-container matColumnDef="sellOperation">
+        <th color="primary" class="center" mat-header-cell *matHeaderCellDef> Sell </th>
+        <td class="center" mat-cell *matCellDef="let element">
+          <button mat-stroked-button color="primary" (click)=goToSellStocks(element)>Sell</button>
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+    </table>
+    <div *ngIf="dataSource.data.length === 0">
+      <mat-card>User don't own any stocks!</mat-card>
+    </div>
+
+  </mat-tab>
+
+  <mat-tab label="Transactions">
+    <ng-template matTabContent>
+      <app-user-history></app-user-history>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab label="Graph">
+    <ng-template matTabContent>
+      <app-user-protfolio-graph></app-user-protfolio-graph>
+    </ng-template>
+  </mat-tab>
+
+</mat-tab-group>

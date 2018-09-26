@@ -1,0 +1,51 @@
+.trade{
+    margin-top: 2% !important;
+    width: 30%;
+    margin: 0 AUTO;
+}
+
+md-card{
+    font-size: 1.5em !important;    
+}
+
+
+span.mat-slider-thumb-label-text {
+    color: black !important;
+}
+
+
+::ng-deep .mat-slider-thumb-label {
+      transform: rotate(45deg) !important;
+      border-radius: 50% 50% 0 !important;
+    }
+    
+    ::ng-deep    .mat-slider-thumb {
+      transform: scale(0) !important;
+    }
+    
+    ::ng-deep   .mat-slider-thumb-label-text {
+      opacity: 1 !important;
+      color: black !important;
+    }
+  
+    ::ng-deep .mat-slider-horizontal{
+        width: 100% !important;
+        display: block !important;
+    }
+
+    ::ng-deep .slider-label{
+        font-size: 0.8em !important;
+        margin-bottom: 2em !important;
+    }
+    
+    ::ng-deep .mat-card-header-text {
+        margin: 0 auto !important;  
+    }
+
+    ::ng-deep .mat-card-title{
+        font-size: 1.5em !important;
+    }
+
+    ::ng-deep .mat-form-field {
+        display: block !important;
+    }

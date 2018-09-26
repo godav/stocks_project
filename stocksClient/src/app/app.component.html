@@ -1,0 +1,7 @@
+<mat-toolbar color="primary">
+    <span>Godav Stocks</span>
+    <a mat-button [routerLink]="['/']" routerLinkActive='active' >Home</a>
+    <a mat-button [routerLink]="['/','user-protfolio']" routerLinkActive='active'>Protfolio</a>
+</mat-toolbar>
+<app-stocks-view></app-stocks-view>
+<router-outlet></router-outlet>

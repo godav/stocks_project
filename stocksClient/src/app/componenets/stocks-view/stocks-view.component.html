@@ -1,0 +1,75 @@
+<div class="spinner-container" *ngIf="dataSource.loading$ | async">
+  <mat-progress-spinner></mat-progress-spinner>
+</div>
+
+<mat-tab-group>
+  <mat-tab label="Online Market">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="symbol">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Symbol </th>
+        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <!-- price Column -->
+      <ng-container matColumnDef="price">
+        <th class="right" mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
+        <td class="right" mat-cell *matCellDef="let element"> {{element.price | currency}} </td>
+      </ng-container>
+
+      <!-- priceChangeInDot Column -->
+      <ng-container matColumnDef="priceChangeDots">
+        <th class="right" mat-header-cell *matHeaderCellDef mat-sort-header> Change $</th>
+        <td class="right" mat-cell *matCellDef="let element" [ngClass]="checkChangeRaised(element.priceChangeDots)?'up':'down'">
+        {{element.priceChangeDots | currency}} </td>
+      </ng-container>
+
+      <!-- priceChangeInPercent Column -->
+      <ng-container matColumnDef="priceChangePercent">
+        <th class="right" mat-header-cell *matHeaderCellDef mat-sort-header> Change % </th>
+        <td class="right" mat-cell *matCellDef="let element" [ngClass]="checkChangeRaised(element.priceChangeDots)?'up':'down'">{{element.priceChangePercent
+          | percent:'1.2-2'}}</td>
+      </ng-container>
+
+      <!-- History operation Column -->
+      <ng-container matColumnDef="history">
+        <th class="center" mat-header-cell *matHeaderCellDef> History </th>
+        <td class="center" mat-cell *matCellDef="let element">
+          <button mat-stroked-button color="primary" (click)=goToStockHistory(element)>History</button>
+        </td>
+      </ng-container>
+
+      <!-- Graph operation Column -->
+      <ng-container matColumnDef="graph">
+        <th class="center" mat-header-cell *matHeaderCellDef> Graph </th>
+        <td class="center" mat-cell *matCellDef="let element">
+          <button mat-stroked-button color="primary" (click)=goToChart(element)>Graph</button>
+        </td>
+      </ng-container>
+
+      <!-- Buy operation Column -->
+      <ng-container matColumnDef="buyOperation">
+        <th class="center" mat-header-cell *matHeaderCellDef> Buy </th>
+        <td class="center" mat-cell *matCellDef="let element">
+          <button mat-stroked-button color="primary" (click)=goToBuyStocks(element)>Buy</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+  </mat-tab>
+  <mat-tab label="Market on graph" >
+      <ng-template matTabContent>
+    <app-stocks-market-chart></app-stocks-market-chart>
+  </ng-template>
+  </mat-tab>
+</mat-tab-group>

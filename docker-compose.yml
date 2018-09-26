@@ -1,0 +1,50 @@
+version: "2.3"
+services:
+  server_layer:
+    image: godav/server:1.0
+    depends_on:
+      db_layer:
+        condition: service_healthy
+    environment:
+      - NODE_ENV=development
+      - PORT=3002
+      - DB_DIALECT=postgres
+      - DB_USERNAME=avner
+      - DB_PASSWORD=1234
+      - DB_NAME=stockDB
+      - DB_HOSTNAME=db
+      - DB_URL=postgres://avner:1234@db:5432/stockDB
+    ports:
+      - "3002:3002"
+    networks:
+      - db_network
+      - server_network
+  client_layer:
+    image: godav/client:1.0
+    depends_on:
+      - server_layer
+    ports:
+      - "80:8080"
+    networks:
+      - server_network
+  db_layer:
+    container_name: stocks_db
+    image: postgres:10
+    networks:
+      - db_network
+    environment:
+      - POSTGRES_DB=stockDB
+      - POSTGRES_USER=avner
+      - POSTGRES_PASSWORD=1234
+    ports:
+      - "3706:5432"
+    healthcheck:
+      test: ["CMD","pg_isready"]
+      interval: 1s
+      timeout: 3s
+      retries: 30
+networks:
+  server_network:
+    driver: bridge
+  db_network:
+    driver: bridge     

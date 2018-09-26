@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>You successfuly made a {{data.type}} for {{data.name}} stocks:</h2>
+<mat-dialog-content>
+  <mat-list>
+    <mat-list-item>
+      <h4 mat-line>Price: {{data.price | number:'1.2-2'}}</h4>
+    </mat-list-item>
+    <mat-list-item>
+      <h4 mat-line>Amount: {{data.amount}}</h4>
+      <mat-divider [inset]="true"></mat-divider>
+    </mat-list-item>
+    <mat-list-item>
+      <h4 mat-line>Total: {{data.total | currency}}</h4>
+    </mat-list-item>
+  </mat-list>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>OK</button>
+</mat-dialog-actions>

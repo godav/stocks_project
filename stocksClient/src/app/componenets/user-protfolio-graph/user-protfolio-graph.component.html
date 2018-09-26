@@ -1,0 +1,5 @@
+<div *ngIf="data.length>0" class="top" [chart]="stockChart"></div>
+
+<div *ngIf="data.length === 0" class="top center">
+    <mat-card>User Don't have stocks in protfolio !</mat-card>
+  </div>

@@ -1,0 +1,57 @@
+<form class="trade" *ngIf="form" [formGroup]="form" (ngSubmit)="save()">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{stock.operation | opTransform}} Stocks</mat-card-title>
+
+    </mat-card-header>
+    <mat-card-content>
+      <p class="center">
+        <mat-form-field>
+          <mat-label>Stock Symbol</mat-label>
+          <input matInput type="text" formControlName='symbol'>
+        </mat-form-field>
+      </p>
+      <p class="center">
+        <mat-form-field>
+          <mat-label>Stock Name</mat-label>
+          <input matInput type="text" formControlName='name'>
+        </mat-form-field>
+      </p>
+      <p class="center">
+        <mat-form-field>
+          <mat-label>Stock Price</mat-label>
+          <input matInput type="text" formControlName='price'>
+          <span matPrefix>$&nbsp;</span>
+        </mat-form-field>
+      </p>
+
+      <p class="center">
+        <mat-form-field *ngIf="stock.operation==1">
+          <mat-label>Stock Amount</mat-label>
+          <input [errorStateMatcher]="matcher" matInput type="text" formControlName='amount'>
+          
+          <mat-hint>How many stocks you wishes to buy?</mat-hint>
+          <mat-error *ngIf="form.get('amount').hasError('forbiddenNumber') && !form.get('amount').hasError('required')">
+              Please enter a valid stocks amount
+            </mat-error>
+            <mat-error *ngIf="form.get('amount').hasError('required')">
+              Amount is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+      </p>
+
+      <p *ngIf="stock.operation==2"  class="slider-label">
+        <mat-label>Amount of stocks to sell:</mat-label>
+      </p>
+      <p *ngIf="stock.operation==2">
+
+        <mat-slider formControlName='amount' *ngIf="stock.operation==2" [max]="stock.amount" [min]="0" [step]="1" [thumbLabel]="true"
+          [tickInterval]="1" [displayWith]="formatLabel"></mat-slider>
+      </p>
+    </mat-card-content>
+    <mat-card-actions class="center">
+      <button mat-raised-button color="primary" type="submit">Commit</button>
+      <button mat-raised-button color="primary">Cancel</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
