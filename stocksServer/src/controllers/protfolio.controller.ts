@@ -44,16 +44,11 @@ export class protfolioController {
             ans = await isStockInProtfolio.save();
         } else { // if user don't own this stock make new buy
             const newStock = {
-                symbol: stock.symbol,
-                name: stock.name,
-                price: stock.price,
-                priceChangeDots: 0,
-                priceChangePercent: 0,
-                amount: stock.amount,
-                total: 0,
-                value: stock.price * stock.amount
+                symbol: stock.symbol, name: stock.name,
+                price: stock.price, priceChangeDots: 0,
+                priceChangePercent: 0, amount: stock.amount,
+                total: 0, value: stock.price * stock.amount
             };
-
             ans = await UserProtfolio.create(newStock);
         }
 

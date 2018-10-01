@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { StocksSrvService } from '../../services/stocks-srv.service';
+import { StocksSrvService } from '../../services/stocks-service/stocks-srv.service';
 import { Chart } from 'angular-highcharts';
 
 

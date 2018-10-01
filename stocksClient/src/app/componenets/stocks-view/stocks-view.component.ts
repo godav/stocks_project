@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Stock } from '../../models/stock';
-import { StocksSrvService } from '../../services/stocks-srv.service';
+import { StocksSrvService } from '../../services/stocks-service/stocks-srv.service';
 import { MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
 
@@ -32,10 +32,7 @@ export class StocksViewComponent implements OnInit {
 
   // used to make the colors red/green
   checkChangeRaised(dots) {
-    if (parseInt(dots) >= 0)
-      return true;
-    else
-      return false;
+    return dots >= 0;
   }
 
   goToStockHistory(element: Stock) {

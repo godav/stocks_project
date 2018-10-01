@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, FormControl, ValidatorFn, AbstractControl, FormGroupDirective, NgForm } from '@angular/forms';
 import { UserStocksOp } from '../../models/stock';
-import { StocksSrvService } from '../../services/stocks-srv.service';
+import { StocksSrvService } from '../../services/stocks-service/stocks-srv.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { formatNumber } from '@angular/common';
 import { MatDialog, ErrorStateMatcher } from '@angular/material';
@@ -78,10 +78,6 @@ export class UserTradeComponent implements OnInit {
               }
 
               this.setForm();
-              // }
-              // else {
-              //   console.log('user dont poses this stock')
-              // }
             })
           }
         } else {// if the route change to diffrent stock the component not reload so change manually

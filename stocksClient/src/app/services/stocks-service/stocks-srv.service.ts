@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable} from 'rxjs';
-import { Stock, StockProtfolio, UserStocksOp } from '../models/stock';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Stock, StockProtfolio, UserStocksOp } from '../../models/stock';
 import { HttpClient } from '@angular/common/http';
 import { Socket } from 'ngx-socket-io';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ import { environment } from '../../environments/environment';
 export class StocksSrvService {
 
   stocks$: BehaviorSubject<Array<Stock>> = new BehaviorSubject<Array<Stock>>([]);
-
+  
   // used to get data of the market from the socket
   private getStocks(): Observable<Array<Stock>> {
     return this.socket.fromEvent("update");
@@ -33,10 +33,6 @@ export class StocksSrvService {
   getStockHistory(symbol: string, pageIndex: number, pageSize: number): Observable<Array<any>> {
     return this.http.get<Array<any>>(`${environment.API_URL}/api/stocks/history/${symbol}?page=${pageIndex}&size=${pageSize}`);
   }
-
-  // getStockHistoryCount(symbol: string): Observable<number> {
-  //   return this.http.get<number>(`${environment.API_URL}/api/stocks/history-count/${symbol}`);
-  // }
 
   getStockHistoryForChart(symbol: string): Observable<Array<any>> {
     return this.http.get<Array<any>>(`${environment.API_URL}/api/stocks/history-chart/${symbol}`);

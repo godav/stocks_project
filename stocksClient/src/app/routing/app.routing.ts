@@ -5,6 +5,7 @@ import { StockHistoryComponent } from '../componenets/stock-history/stock-histor
 import { Route } from '@angular/router';
 import { UserTradeComponent } from '../componenets/user-trade/user-trade.component';
 import { StockHistoryChartComponent } from '../componenets/stock-history-chart/stock-history-chart.component';
+import { ErrorsComponent } from '../errors/errors-component/errors.component';
 
 export const ROUTES: Route[] = [
 
@@ -25,6 +26,9 @@ export const ROUTES: Route[] = [
   },
   {
     path: 'stock-history-chart/:symbol', component: StockHistoryChartComponent
+  },
+  {
+    path: 'error', component: ErrorsComponent
   },
   { path: '', pathMatch: 'full', redirectTo: '/' }
 

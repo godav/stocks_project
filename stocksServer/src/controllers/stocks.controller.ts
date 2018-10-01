@@ -28,11 +28,6 @@ export class stocksController {
         return [data, MarketHistorySize];
     }
 
-    // @Get("/history-count/:symbol")
-    // async getTotalStocksPerSymbol(@Param("symbol") symbol: string) {
-    //     return await MarketHistory.count({ where: { symbol: symbol } });
-    // }
-
     @Get("/history-chart/:symbol")
     async getDataHistoryPerSymbolForChart(@Param("symbol") symbol: string) {
         const history = await MarketHistory.findAll({

@@ -30,7 +30,7 @@ webpackEmptyAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = "p {\n    font-family: Lato;\n    color: white;\n    text-transform: uppercase;\n    word-wrap:break-word;\n  }\n  \n  .notification {\n      position: absolute;\n      z-index: 1;\n      top: 5px;\n      line-height: 20px;\n      text-align: center;\n      right: 5px;\n      background: linear-gradient(-90deg, #cb5cd2, #cc3fa0);\n      color: white;\n      font-style: oblique;\n      text-transform: capitalize;\n      box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);\n      min-height: 20px;\n      min-width: 160px;\n      max-width: 300px;\n      padding: 15px;\n      cursor: pointer;\n  }"
 
 /***/ }),
 
@@ -41,7 +41,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-toolbar color=\"primary\">\n    <span>Godav Stocks</span>\n    <a mat-button [routerLink]=\"['/']\" routerLinkActive='active' >Home</a>\n    <a mat-button [routerLink]=\"['/','user-protfolio']\" routerLinkActive='active'>Protfolio</a>\n</mat-toolbar>\n<app-stocks-view></app-stocks-view>\n<router-outlet></router-outlet>"
+module.exports = "<mat-toolbar color=\"primary\" *ngIf=\"!showNotification\">\n    <span>Godav Stocks</span>\n    <a mat-button [routerLink]=\"['/']\" routerLinkActive='active' >Home</a>\n    <a mat-button [routerLink]=\"['/','user-protfolio']\" routerLinkActive='active'>Protfolio</a>\n</mat-toolbar>\n<!-- <div *ngIf=\"notification && showNotification\"\n     (click)=\"showNotification = !showNotification\"\n     class=\"notification\">\n  <p>{{ notification }}</p>\n</div> -->\n<app-stocks-view *ngIf=\"!showNotification\"></app-stocks-view>\n<router-outlet></router-outlet>"
 
 /***/ }),
 
@@ -56,7 +56,7 @@ module.exports = "<mat-toolbar color=\"primary\">\n    <span>Godav Stocks</span>
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppComponent", function() { return AppComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _services_notification_service_notification_srv_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./services/notification-service/notification-srv.service */ "./src/app/services/notification-service/notification-srv.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -69,17 +69,25 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var AppComponent = /** @class */ (function () {
-    function AppComponent(router) {
-        this.router = router;
+    function AppComponent(notificationService) {
+        this.notificationService = notificationService;
         this.title = 'stocksClient';
     }
+    AppComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.notificationService
+            .errors$
+            .subscribe(function (isError) {
+            _this.showNotification = isError;
+        });
+    };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-root',
             template: __webpack_require__(/*! ./app.component.html */ "./src/app/app.component.html"),
             styles: [__webpack_require__(/*! ./app.component.css */ "./src/app/app.component.css")]
         }),
-        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
+        __metadata("design:paramtypes", [_services_notification_service_notification_srv_service__WEBPACK_IMPORTED_MODULE_1__["NotificationSrvService"]])
     ], AppComponent);
     return AppComponent;
 }());
@@ -123,12 +131,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _componenets_stocks_market_chart_stocks_market_chart_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./componenets/stocks-market-chart/stocks-market-chart.component */ "./src/app/componenets/stocks-market-chart/stocks-market-chart.component.ts");
 /* harmony import */ var _componenets_user_protfolio_graph_user_protfolio_graph_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./componenets/user-protfolio-graph/user-protfolio-graph.component */ "./src/app/componenets/user-protfolio-graph/user-protfolio-graph.component.ts");
 /* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var _errors_errors_handler_errors_handler__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./errors/errors-handler/errors-handler */ "./src/app/errors/errors-handler/errors-handler.ts");
+/* harmony import */ var _errors_errors_component_errors_component__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./errors/errors-component/errors.component */ "./src/app/errors/errors-component/errors.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -170,7 +182,8 @@ var AppModule = /** @class */ (function () {
                 _componenets_success_dialog_success_dialog_component__WEBPACK_IMPORTED_MODULE_19__["SuccessDialogComponent"],
                 _componenets_stock_history_chart_stock_history_chart_component__WEBPACK_IMPORTED_MODULE_20__["StockHistoryChartComponent"],
                 _componenets_stocks_market_chart_stocks_market_chart_component__WEBPACK_IMPORTED_MODULE_21__["StocksMarketChartComponent"],
-                _componenets_user_protfolio_graph_user_protfolio_graph_component__WEBPACK_IMPORTED_MODULE_22__["UserProtfolioGraphComponent"]
+                _componenets_user_protfolio_graph_user_protfolio_graph_component__WEBPACK_IMPORTED_MODULE_22__["UserProtfolioGraphComponent"],
+                _errors_errors_component_errors_component__WEBPACK_IMPORTED_MODULE_25__["ErrorsComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
@@ -200,7 +213,10 @@ var AppModule = /** @class */ (function () {
                     onSameUrlNavigation: 'reload'
                 })
             ],
-            providers: [],
+            providers: [{
+                    provide: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ErrorHandler"],
+                    useClass: _errors_errors_handler_errors_handler__WEBPACK_IMPORTED_MODULE_24__["ErrorsHandler"],
+                }],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_6__["AppComponent"]],
             entryComponents: [_componenets_success_dialog_success_dialog_component__WEBPACK_IMPORTED_MODULE_19__["SuccessDialogComponent"]]
         })
@@ -246,7 +262,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StockHistoryChartComponent", function() { return StockHistoryChartComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var angular_highcharts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! angular-highcharts */ "./node_modules/angular-highcharts/angular-highcharts.es5.js");
-/* harmony import */ var _services_stocks_srv_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/stocks-srv.service */ "./src/app/services/stocks-srv.service.ts");
+/* harmony import */ var _services_stocks_service_stocks_srv_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/stocks-service/stocks-srv.service */ "./src/app/services/stocks-service/stocks-srv.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -316,7 +332,7 @@ var StockHistoryChartComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./stock-history-chart.component.html */ "./src/app/componenets/stock-history-chart/stock-history-chart.component.html"),
             styles: [__webpack_require__(/*! ./stock-history-chart.component.css */ "./src/app/componenets/stock-history-chart/stock-history-chart.component.css")]
         }),
-        __metadata("design:paramtypes", [_services_stocks_srv_service__WEBPACK_IMPORTED_MODULE_2__["StocksSrvService"],
+        __metadata("design:paramtypes", [_services_stocks_service_stocks_srv_service__WEBPACK_IMPORTED_MODULE_2__["StocksSrvService"],
             _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"]])
     ], StockHistoryChartComponent);
     return StockHistoryChartComponent;
@@ -360,7 +376,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StockHistoryComponent", function() { return StockHistoryComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var _services_stocks_srv_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/stocks-srv.service */ "./src/app/services/stocks-srv.service.ts");
+/* harmony import */ var _services_stocks_service_stocks_srv_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/stocks-service/stocks-srv.service */ "./src/app/services/stocks-service/stocks-srv.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -422,7 +438,7 @@ var StockHistoryComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./stock-history.component.html */ "./src/app/componenets/stock-history/stock-history.component.html"),
             styles: [__webpack_require__(/*! ./stock-history.component.css */ "./src/app/componenets/stock-history/stock-history.component.css")]
         }),
-        __metadata("design:paramtypes", [_services_stocks_srv_service__WEBPACK_IMPORTED_MODULE_2__["StocksSrvService"],
+        __metadata("design:paramtypes", [_services_stocks_service_stocks_srv_service__WEBPACK_IMPORTED_MODULE_2__["StocksSrvService"],
             _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"]])
     ], StockHistoryComponent);
     return StockHistoryComponent;
@@ -466,7 +482,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StocksMarketChartComponent", function() { return StocksMarketChartComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var angular_highcharts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! angular-highcharts */ "./node_modules/angular-highcharts/angular-highcharts.es5.js");
-/* harmony import */ var _services_stocks_srv_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/stocks-srv.service */ "./src/app/services/stocks-srv.service.ts");
+/* harmony import */ var _services_stocks_service_stocks_srv_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/stocks-service/stocks-srv.service */ "./src/app/services/stocks-service/stocks-srv.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -533,7 +549,7 @@ var StocksMarketChartComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./stocks-market-chart.component.html */ "./src/app/componenets/stocks-market-chart/stocks-market-chart.component.html"),
             styles: [__webpack_require__(/*! ./stocks-market-chart.component.css */ "./src/app/componenets/stocks-market-chart/stocks-market-chart.component.css")]
         }),
-        __metadata("design:paramtypes", [_services_stocks_srv_service__WEBPACK_IMPORTED_MODULE_2__["StocksSrvService"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"]])
+        __metadata("design:paramtypes", [_services_stocks_service_stocks_srv_service__WEBPACK_IMPORTED_MODULE_2__["StocksSrvService"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"]])
     ], StocksMarketChartComponent);
     return StocksMarketChartComponent;
 }());
@@ -575,7 +591,7 @@ module.exports = "<div class=\"spinner-container\" *ngIf=\"dataSource.loading$ |
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StocksViewComponent", function() { return StocksViewComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _services_stocks_srv_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/stocks-srv.service */ "./src/app/services/stocks-srv.service.ts");
+/* harmony import */ var _services_stocks_service_stocks_srv_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/stocks-service/stocks-srv.service */ "./src/app/services/stocks-service/stocks-srv.service.ts");
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
@@ -610,10 +626,7 @@ var StocksViewComponent = /** @class */ (function () {
     }
     // used to make the colors red/green
     StocksViewComponent.prototype.checkChangeRaised = function (dots) {
-        if (parseInt(dots) >= 0)
-            return true;
-        else
-            return false;
+        return dots >= 0;
     };
     StocksViewComponent.prototype.goToStockHistory = function (element) {
         this.router.navigate(['/', 'stock-history', element.symbol]);
@@ -632,7 +645,7 @@ var StocksViewComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./stocks-view.component.html */ "./src/app/componenets/stocks-view/stocks-view.component.html"),
             styles: [__webpack_require__(/*! ./stocks-view.component.css */ "./src/app/componenets/stocks-view/stocks-view.component.css")]
         }),
-        __metadata("design:paramtypes", [_services_stocks_srv_service__WEBPACK_IMPORTED_MODULE_1__["StocksSrvService"],
+        __metadata("design:paramtypes", [_services_stocks_service_stocks_srv_service__WEBPACK_IMPORTED_MODULE_1__["StocksSrvService"],
             _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
     ], StocksViewComponent);
     return StocksViewComponent;
@@ -746,7 +759,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserHistoryComponent", function() { return UserHistoryComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var _services_stocks_srv_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/stocks-srv.service */ "./src/app/services/stocks-srv.service.ts");
+/* harmony import */ var _services_stocks_service_stocks_srv_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/stocks-service/stocks-srv.service */ "./src/app/services/stocks-service/stocks-srv.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -804,7 +817,7 @@ var UserHistoryComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./user-history.component.html */ "./src/app/componenets/user-history/user-history.component.html"),
             styles: [__webpack_require__(/*! ./user-history.component.css */ "./src/app/componenets/user-history/user-history.component.css")]
         }),
-        __metadata("design:paramtypes", [_services_stocks_srv_service__WEBPACK_IMPORTED_MODULE_2__["StocksSrvService"],
+        __metadata("design:paramtypes", [_services_stocks_service_stocks_srv_service__WEBPACK_IMPORTED_MODULE_2__["StocksSrvService"],
             _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"]])
     ], UserHistoryComponent);
     return UserHistoryComponent;
@@ -847,7 +860,7 @@ module.exports = "<div *ngIf=\"data.length>0\" class=\"top\" [chart]=\"stockChar
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserProtfolioGraphComponent", function() { return UserProtfolioGraphComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _services_stocks_srv_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/stocks-srv.service */ "./src/app/services/stocks-srv.service.ts");
+/* harmony import */ var _services_stocks_service_stocks_srv_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/stocks-service/stocks-srv.service */ "./src/app/services/stocks-service/stocks-srv.service.ts");
 /* harmony import */ var angular_highcharts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! angular-highcharts */ "./node_modules/angular-highcharts/angular-highcharts.es5.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -910,7 +923,7 @@ var UserProtfolioGraphComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./user-protfolio-graph.component.html */ "./src/app/componenets/user-protfolio-graph/user-protfolio-graph.component.html"),
             styles: [__webpack_require__(/*! ./user-protfolio-graph.component.css */ "./src/app/componenets/user-protfolio-graph/user-protfolio-graph.component.css")]
         }),
-        __metadata("design:paramtypes", [_services_stocks_srv_service__WEBPACK_IMPORTED_MODULE_1__["StocksSrvService"]])
+        __metadata("design:paramtypes", [_services_stocks_service_stocks_srv_service__WEBPACK_IMPORTED_MODULE_1__["StocksSrvService"]])
     ], UserProtfolioGraphComponent);
     return UserProtfolioGraphComponent;
 }());
@@ -953,7 +966,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserProtfolioComponent", function() { return UserProtfolioComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var _services_stocks_srv_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/stocks-srv.service */ "./src/app/services/stocks-srv.service.ts");
+/* harmony import */ var _services_stocks_service_stocks_srv_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/stocks-service/stocks-srv.service */ "./src/app/services/stocks-service/stocks-srv.service.ts");
 /* harmony import */ var ngx_socket_io__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ngx-socket-io */ "./node_modules/ngx-socket-io/index.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
@@ -1006,10 +1019,7 @@ var UserProtfolioComponent = /** @class */ (function () {
     };
     // used to make red/green color indicator
     UserProtfolioComponent.prototype.checkChangeRaised = function (dots) {
-        if (parseInt(dots) >= 0)
-            return true;
-        else
-            return false;
+        return dots >= 0;
     };
     UserProtfolioComponent.prototype.goToBuyStocks = function (element) {
         this.router.navigate(['/', 'user-trade', element.symbol, 1]);
@@ -1031,7 +1041,7 @@ var UserProtfolioComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./user-protfolio.component.html */ "./src/app/componenets/user-protfolio/user-protfolio.component.html"),
             styles: [__webpack_require__(/*! ./user-protfolio.component.css */ "./src/app/componenets/user-protfolio/user-protfolio.component.css")]
         }),
-        __metadata("design:paramtypes", [_services_stocks_srv_service__WEBPACK_IMPORTED_MODULE_2__["StocksSrvService"], ngx_socket_io__WEBPACK_IMPORTED_MODULE_3__["Socket"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"]])
+        __metadata("design:paramtypes", [_services_stocks_service_stocks_srv_service__WEBPACK_IMPORTED_MODULE_2__["StocksSrvService"], ngx_socket_io__WEBPACK_IMPORTED_MODULE_3__["Socket"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"]])
     ], UserProtfolioComponent);
     return UserProtfolioComponent;
 }());
@@ -1075,7 +1085,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserTradeComponent", function() { return UserTradeComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _services_stocks_srv_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/stocks-srv.service */ "./src/app/services/stocks-srv.service.ts");
+/* harmony import */ var _services_stocks_service_stocks_srv_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/stocks-service/stocks-srv.service */ "./src/app/services/stocks-service/stocks-srv.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
@@ -1144,10 +1154,6 @@ var UserTradeComponent = /** @class */ (function () {
                                 amount: parseInt(userStock[0].amount)
                             };
                             _this.setForm();
-                            // }
-                            // else {
-                            //   console.log('user dont poses this stock')
-                            // }
                         });
                     }
                 }
@@ -1229,10 +1235,150 @@ var UserTradeComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./user-trade.component.html */ "./src/app/componenets/user-trade/user-trade.component.html"),
             styles: [__webpack_require__(/*! ./user-trade.component.css */ "./src/app/componenets/user-trade/user-trade.component.css")]
         }),
-        __metadata("design:paramtypes", [_services_stocks_srv_service__WEBPACK_IMPORTED_MODULE_2__["StocksSrvService"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"],
+        __metadata("design:paramtypes", [_services_stocks_service_stocks_srv_service__WEBPACK_IMPORTED_MODULE_2__["StocksSrvService"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"],
             _angular_material__WEBPACK_IMPORTED_MODULE_5__["MatDialog"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
     ], UserTradeComponent);
     return UserTradeComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/errors/errors-component/errors.component.css":
+/*!**************************************************************!*\
+  !*** ./src/app/errors/errors-component/errors.component.css ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "h1, h3, h4, h5 {\n    margin-bottom: 0;\n    margin-top: 10px;\n  }\n  \n  .error-container {\n    width: 50%;\n    margin: 0 auto;\n    margin-top: 20%;\n    text-align: center;\n  }"
+
+/***/ }),
+
+/***/ "./src/app/errors/errors-component/errors.component.html":
+/*!***************************************************************!*\
+  !*** ./src/app/errors/errors-component/errors.component.html ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"error-container\">\n\n    <h1>Error name : {{ routeParams?.name }}</h1>\n    <h2>Error message : {{ routeParams?.message }}</h2>\n    <a mat-raised-button (click)=\"tryAgain()\">\n      <h5>Go to Home</h5>\n    </a>\n  \n</div>"
+
+/***/ }),
+
+/***/ "./src/app/errors/errors-component/errors.component.ts":
+/*!*************************************************************!*\
+  !*** ./src/app/errors/errors-component/errors.component.ts ***!
+  \*************************************************************/
+/*! exports provided: ErrorsComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ErrorsComponent", function() { return ErrorsComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _services_notification_service_notification_srv_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/notification-service/notification-srv.service */ "./src/app/services/notification-service/notification-srv.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var ErrorsComponent = /** @class */ (function () {
+    function ErrorsComponent(activatedRoute, router, notificationSrv) {
+        this.activatedRoute = activatedRoute;
+        this.router = router;
+        this.notificationSrv = notificationSrv;
+    }
+    ErrorsComponent.prototype.tryAgain = function () {
+        this.notificationSrv.notifyError(false);
+        this.router.navigate(['/']);
+    };
+    ErrorsComponent.prototype.ngOnInit = function () {
+        this.routeParams = this.activatedRoute.snapshot.queryParams;
+    };
+    ErrorsComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-errors',
+            template: __webpack_require__(/*! ./errors.component.html */ "./src/app/errors/errors-component/errors.component.html"),
+            styles: [__webpack_require__(/*! ./errors.component.css */ "./src/app/errors/errors-component/errors.component.css")]
+        }),
+        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"],
+            _services_notification_service_notification_srv_service__WEBPACK_IMPORTED_MODULE_2__["NotificationSrvService"]])
+    ], ErrorsComponent);
+    return ErrorsComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/errors/errors-handler/errors-handler.ts":
+/*!*********************************************************!*\
+  !*** ./src/app/errors/errors-handler/errors-handler.ts ***!
+  \*********************************************************/
+/*! exports provided: ErrorsHandler */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ErrorsHandler", function() { return ErrorsHandler; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _services_notification_service_notification_srv_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/notification-service/notification-srv.service */ "./src/app/services/notification-service/notification-srv.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var ErrorsHandler = /** @class */ (function () {
+    function ErrorsHandler(injector) {
+        this.injector = injector;
+    }
+    ErrorsHandler.prototype.handleError = function (error) {
+        var notificationSrv = this.injector.get(_services_notification_service_notification_srv_service__WEBPACK_IMPORTED_MODULE_3__["NotificationSrvService"]);
+        var router = this.injector.get(_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]);
+        console.log('ininin');
+        if (error instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpErrorResponse"]) {
+            // Server error happened      
+            if (!navigator.onLine) {
+                // No Internet connection
+                router.navigate(['/error'], { queryParams: { name: 'Conectivity problem', message: 'No Internet Connection' } });
+            }
+            else {
+                // Http Error
+                router.navigate(['/error'], { queryParams: { name: error.name, message: error.message } });
+            }
+        }
+        else {
+            // Client Error Happend     
+            router.navigate(['/error'], { queryParams: { name: 'App error', message: 'Please try to reach godav' } });
+        }
+        // Log the error anyway
+        notificationSrv.notifyError(true);
+    };
+    ErrorsHandler = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
+        __metadata("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injector"]])
+    ], ErrorsHandler);
+    return ErrorsHandler;
 }());
 
 
@@ -1294,6 +1440,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _componenets_stock_history_stock_history_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../componenets/stock-history/stock-history.component */ "./src/app/componenets/stock-history/stock-history.component.ts");
 /* harmony import */ var _componenets_user_trade_user_trade_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../componenets/user-trade/user-trade.component */ "./src/app/componenets/user-trade/user-trade.component.ts");
 /* harmony import */ var _componenets_stock_history_chart_stock_history_chart_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../componenets/stock-history-chart/stock-history-chart.component */ "./src/app/componenets/stock-history-chart/stock-history-chart.component.ts");
+/* harmony import */ var _errors_errors_component_errors_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../errors/errors-component/errors.component */ "./src/app/errors/errors-component/errors.component.ts");
+
 
 
 
@@ -1319,16 +1467,62 @@ var ROUTES = [
     {
         path: 'stock-history-chart/:symbol', component: _componenets_stock_history_chart_stock_history_chart_component__WEBPACK_IMPORTED_MODULE_5__["StockHistoryChartComponent"]
     },
+    {
+        path: 'error', component: _errors_errors_component_errors_component__WEBPACK_IMPORTED_MODULE_6__["ErrorsComponent"]
+    },
     { path: '', pathMatch: 'full', redirectTo: '/' }
 ];
 
 
 /***/ }),
 
-/***/ "./src/app/services/stocks-srv.service.ts":
-/*!************************************************!*\
-  !*** ./src/app/services/stocks-srv.service.ts ***!
-  \************************************************/
+/***/ "./src/app/services/notification-service/notification-srv.service.ts":
+/*!***************************************************************************!*\
+  !*** ./src/app/services/notification-service/notification-srv.service.ts ***!
+  \***************************************************************************/
+/*! exports provided: NotificationSrvService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NotificationSrvService", function() { return NotificationSrvService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var NotificationSrvService = /** @class */ (function () {
+    function NotificationSrvService() {
+        this.errors$ = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](false);
+    }
+    NotificationSrvService.prototype.notifyError = function (isError) {
+        this.errors$.next(isError);
+    };
+    NotificationSrvService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [])
+    ], NotificationSrvService);
+    return NotificationSrvService;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/stocks-service/stocks-srv.service.ts":
+/*!***************************************************************!*\
+  !*** ./src/app/services/stocks-service/stocks-srv.service.ts ***!
+  \***************************************************************/
 /*! exports provided: StocksSrvService */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1339,7 +1533,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var ngx_socket_io__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ngx-socket-io */ "./node_modules/ngx-socket-io/index.js");
-/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../environments/environment */ "./src/environments/environment.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1386,9 +1580,6 @@ var StocksSrvService = /** @class */ (function () {
     StocksSrvService.prototype.getStockHistory = function (symbol, pageIndex, pageSize) {
         return this.http.get(_environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].API_URL + "/api/stocks/history/" + symbol + "?page=" + pageIndex + "&size=" + pageSize);
     };
-    // getStockHistoryCount(symbol: string): Observable<number> {
-    //   return this.http.get<number>(`${environment.API_URL}/api/stocks/history-count/${symbol}`);
-    // }
     StocksSrvService.prototype.getStockHistoryForChart = function (symbol) {
         return this.http.get(_environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].API_URL + "/api/stocks/history-chart/" + symbol);
     };

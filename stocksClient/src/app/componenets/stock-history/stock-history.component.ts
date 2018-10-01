@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
-import { StocksSrvService } from '../../services/stocks-srv.service';
+import { StocksSrvService } from '../../services/stocks-service/stocks-srv.service';
 import { ActivatedRoute } from '@angular/router';
 import { BaseStock } from '../../models/stock';
 

@@ -16,11 +16,11 @@ function InitDataBase() {
         if (countMarketOnline === 0) {
             yield MarketOnline_1.MarketOnline.sync({ force: false });
             yield MarketOnline_1.MarketOnline.bulkCreate([
-                { symbol: 'APL', name: 'Apple', price: 0, priceChangeDots: 0, priceChangePercent: 0 },
-                { symbol: 'TVA', name: 'Teva', price: 0, priceChangeDots: 0, priceChangePercent: 0 },
-                { symbol: 'ISR', name: 'Isramco', price: 0, priceChangeDots: 0, priceChangePercent: 0 },
-                { symbol: 'DLK', name: 'Delek', price: 0, priceChangeDots: 0, priceChangePercent: 0 },
-                { symbol: 'ELA', name: 'El-Al', price: 0, priceChangeDots: 0, priceChangePercent: 0 },
+                { symbol: 'APL', name: 'Apple', price: 1, priceChangeDots: 0, priceChangePercent: 0 },
+                { symbol: 'TVA', name: 'Teva', price: 1, priceChangeDots: 0, priceChangePercent: 0 },
+                { symbol: 'ISR', name: 'Isramco', price: 1, priceChangeDots: 0, priceChangePercent: 0 },
+                { symbol: 'DLK', name: 'Delek', price: 1, priceChangeDots: 0, priceChangePercent: 0 },
+                { symbol: 'ELA', name: 'El-Al', price: 1, priceChangeDots: 0, priceChangePercent: 0 },
             ]);
         }
     });

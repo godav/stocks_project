@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
-import { StocksSrvService } from '../../services/stocks-srv.service'
+import { StocksSrvService } from '../../services/stocks-service/stocks-srv.service';
 import { Socket } from 'ngx-socket-io';
 import { Observable } from 'rxjs';
 import { StockProtfolio } from '../../models/stock';
@@ -50,10 +50,7 @@ export class UserProtfolioComponent implements OnInit {
 
   // used to make red/green color indicator
   checkChangeRaised(dots) {
-    if (parseInt(dots) >= 0)
-      return true;
-    else
-      return false;
+    return dots >= 0;
   }
 
   goToBuyStocks(element: StockProtfolio) {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Highcharts, Chart } from 'angular-highcharts';
 import { BaseStock } from '../../models/stock';
-import { StocksSrvService } from '../../services/stocks-srv.service';
+import { StocksSrvService } from '../../services/stocks-service/stocks-srv.service';
 import { ActivatedRoute } from '@angular/router';
 
 Highcharts.setOptions({

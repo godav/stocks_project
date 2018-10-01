@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpClientModule } from '../../node_modules/@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '../../node_modules/@angular/router';
@@ -31,6 +31,8 @@ import { StockHistoryChartComponent } from './componenets/stock-history-chart/st
 import { StocksMarketChartComponent } from './componenets/stocks-market-chart/stocks-market-chart.component';
 import { UserProtfolioGraphComponent } from './componenets/user-protfolio-graph/user-protfolio-graph.component';
 import { environment } from '../environments/environment';
+import { ErrorsHandler } from './errors/errors-handler/errors-handler';
+import { ErrorsComponent } from './errors/errors-component/errors.component';
 
 const config: SocketIoConfig = { url: `${environment.API_URL}`, options: {} };
 
@@ -46,8 +48,8 @@ const config: SocketIoConfig = { url: `${environment.API_URL}`, options: {} };
     SuccessDialogComponent,
     StockHistoryChartComponent,
     StocksMarketChartComponent,
-    UserProtfolioGraphComponent
-
+    UserProtfolioGraphComponent,
+    ErrorsComponent
   ],
   imports: [
     BrowserModule,
@@ -77,7 +79,10 @@ const config: SocketIoConfig = { url: `${environment.API_URL}`, options: {} };
       onSameUrlNavigation: 'reload'
     })
   ],
-  providers: [],
+  providers: [{
+    provide: ErrorHandler,
+    useClass: ErrorsHandler,
+  }],
   bootstrap: [AppComponent],
   entryComponents: [SuccessDialogComponent]
 })

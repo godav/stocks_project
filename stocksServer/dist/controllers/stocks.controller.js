@@ -50,10 +50,6 @@ let stocksController = class stocksController {
             return [data, MarketHistorySize];
         });
     }
-    // @Get("/history-count/:symbol")
-    // async getTotalStocksPerSymbol(@Param("symbol") symbol: string) {
-    //     return await MarketHistory.count({ where: { symbol: symbol } });
-    // }
     getDataHistoryPerSymbolForChart(symbol) {
         return __awaiter(this, void 0, void 0, function* () {
             const history = yield MarketHistory_1.MarketHistory.findAll({

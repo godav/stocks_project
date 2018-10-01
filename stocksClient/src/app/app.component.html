@@ -1,7 +1,12 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" *ngIf="!showNotification">
     <span>Godav Stocks</span>
     <a mat-button [routerLink]="['/']" routerLinkActive='active' >Home</a>
     <a mat-button [routerLink]="['/','user-protfolio']" routerLinkActive='active'>Protfolio</a>
 </mat-toolbar>
-<app-stocks-view></app-stocks-view>
+<!-- <div *ngIf="notification && showNotification"
+     (click)="showNotification = !showNotification"
+     class="notification">
+  <p>{{ notification }}</p>
+</div> -->
+<app-stocks-view *ngIf="!showNotification"></app-stocks-view>
 <router-outlet></router-outlet>

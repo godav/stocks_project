@@ -5,8 +5,8 @@ import { UserProtfolio } from '../models/UserProtfolio';
 
 export class stocksGenerator {
 
-    private MIN = -30;
-    private MAX = 30;
+    private MIN = -0.3;
+    private MAX = 0.3;
     private INTERVAL = 30000;
     private _io!: SocketIO.Server;
 
@@ -19,21 +19,16 @@ export class stocksGenerator {
         try {
             let stocks = await MarketOnline.findAll()
             let arbitrage: number;
-            stocks.forEach(async (stock) => {
 
-                do {
-                    arbitrage = this.getRandomArbitrary();
-                } while ((arbitrage + stock.price) < 0);
+            for await (const stock of Object.values(stocks)) {
 
-                stock.priceChangeDots = (stock.price + arbitrage) - stock.price;
-                if (stock.price === 0)
-                    stock.priceChangePercent = 0;
-                else
+                arbitrage = this.getRandomArbitrary();
+                stock.priceChangeDots = (stock.price * arbitrage) - stock.price;
+                stock.price === 0 ? stock.priceChangePercent = 0 :
                     stock.priceChangePercent = stock.priceChangeDots / stock.price;
-                stock.price += arbitrage;
+                stock.price *= arbitrage;
 
                 await stock.save();
-
                 await MarketHistory.create({ symbol: stock.symbol, name: stock.name, price: stock.price })
 
                 const userStockBeforeUpdate = await UserProtfolio.findOne({
@@ -47,24 +42,19 @@ export class stocksGenerator {
                         value: stock.price * userStockBeforeUpdate.amount
                     })
                 }
-            })
-            stocks = await MarketOnline.findAll({ order: [['symbol', 'ASC']] });
-            this._io.emit('update', stocks);
+            }
 
-            let protfolio = await UserProtfolio.findAll({ order: [['symbol', 'ASC']] });
-            this._io.emit('protfolio', protfolio);
+            this._io.emit('update', await MarketOnline.findAll({ order: [['symbol', 'ASC']] }));
+            this._io.emit('protfolio', await UserProtfolio.findAll({ order: [['symbol', 'ASC']] }));
+
             setTimeout(() => { this.generateStockPrice() }, this.INTERVAL);
 
         } catch (err) {
             console.log('we have an error', err.message)
         }
-
     }
 
     private getRandomArbitrary(): number {
-        return Math.random() * (this.MAX - this.MIN) + this.MIN;
+        return Math.random() * (this.MAX - this.MIN) + this.MIN + 1;
     }
-
-
-
 }

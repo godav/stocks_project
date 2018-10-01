@@ -7,7 +7,7 @@
     "start": "nodemon --exec ts-node dist/app.js",
     "build": "rimraf dist && tsc",
     "prod": "node app.js",
-    "docker": "docker build -t server:1.0 ."
+    "docker": "docker build -t server:1.1 ."
   },
   "keywords": [],
   "author": "",
